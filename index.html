@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hawaii 2026 - KOMI Family Trip</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --sand: #faf6f1;
+      --ocean: #0077b6;
+      --ocean-light: #e8f4f8;
+      --sunset: #f4845f;
+      --sunset-light: #fff0eb;
+      --palm: #2d6a4f;
+      --palm-light: #edf5f0;
+      --gold: #e9c46a;
+      --text: #1a1a1a;
+      --text-secondary: #6b6b6b;
+      --border: #e8e4df;
+      --white: #ffffff;
+      --radius: 20px;
+      --radius-sm: 14px;
+      /* pop art */
+      --pop-pink: #ff2d78;
+      --pop-yellow: #ffe156;
+      --pop-cyan: #00d4ff;
+      --pop-orange: #ff8c42;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--sand);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== ILLUSTRATED HERO ===== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg,
+        #1a1050 0%,
+        #4c1d95 14%,
+        #9a3412 30%,
+        #c2410c 44%,
+        #ea580c 58%,
+        #f97316 72%,
+        #fbbf24 84%,
+        #fde68a 93%,
+        #fff0c0 100%
+      );
+      z-index: 0;
+    }
+
+    .hero-halftone {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(0,0,0,0.08) 1px, transparent 1px);
+      background-size: 10px 10px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-sun {
+      position: absolute;
+      bottom: 38%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: clamp(200px, 55vw, 360px);
+      height: clamp(200px, 55vw, 360px);
+      border-radius: 50%;
+      background: radial-gradient(circle at 42% 42%, #fffde0 0%, #fde68a 45%, #fbbf24 100%);
+      box-shadow: 0 0 60px 15px rgba(253,230,138,0.6), 0 0 120px 40px rgba(251,191,36,0.25);
+      z-index: 2;
+      animation: sun-pulse 5s ease-in-out infinite;
+    }
+
+    .hero-ocean {
+      position: absolute;
+      bottom: 56px;
+      left: 0;
+      width: 100%;
+      z-index: 3;
+      pointer-events: none;
+    }
+    /* 後ろの波（遅い・左流れ） */
+    .hero-ocean-1 { animation: wave-drift-1 11s ease-in-out infinite; }
+    /* 中間の波（中速・右流れ） */
+    .hero-ocean-2 { animation: wave-drift-2 7s ease-in-out infinite; }
+    /* 手前の波（速い・左流れ） */
+    .hero-ocean-3 { animation: wave-drift-3 4.5s ease-in-out infinite; }
+
+    .hero-palm {
+      position: absolute;
+      bottom: 0;
+      z-index: 5;
+      width: clamp(120px, 30vw, 200px);
+    }
+
+    .hero-palm-left  { left: -8px;  transform-origin: bottom center; animation: sway-l 4.2s ease-in-out infinite; }
+    .hero-palm-right { right: -8px; transform-origin: bottom center; animation: sway-r 5.1s ease-in-out infinite; }
+
+    .hero-overlay { display: none; }
+
+    .hero-shore {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: linear-gradient(180deg, #b89030 0%, #c8a848 35%, #d8b858 65%, #e8c868 100%);
+      z-index: 4;
+    }
+/* === HERO ANIMATIONS === */
+    @keyframes sway-l {
+      0%, 100% { transform: rotate(0deg); }
+      50%       { transform: rotate(2.5deg); }
+    }
+    @keyframes sway-r {
+      0%, 100% { transform: scaleX(-1) rotate(0deg); }
+      50%       { transform: scaleX(-1) rotate(2.5deg); }
+    }
+    @keyframes wave-drift-1 {
+      0%   { transform: translateX(0)     translateY(0); }
+      33%  { transform: translateX(-16px) translateY(-4px); }
+      66%  { transform: translateX(8px)   translateY(2px); }
+      100% { transform: translateX(0)     translateY(0); }
+    }
+    @keyframes wave-drift-2 {
+      0%   { transform: translateX(0)    translateY(0); }
+      40%  { transform: translateX(12px) translateY(3px); }
+      80%  { transform: translateX(-9px) translateY(-2px); }
+      100% { transform: translateX(0)    translateY(0); }
+    }
+    @keyframes wave-drift-3 {
+      0%, 100% { transform: translateX(0)     translateY(0); }
+      50%       { transform: translateX(-10px) translateY(2px); }
+    }
+    @keyframes sun-pulse {
+      0%, 100% {
+        transform: translateX(-50%) scale(1);
+        box-shadow: 0 0 60px 15px rgba(253,230,138,0.6), 0 0 120px 40px rgba(251,191,36,0.25);
+      }
+      50% {
+        transform: translateX(-50%) scale(1.07);
+        box-shadow: 0 0 90px 30px rgba(253,230,138,0.8), 0 0 180px 65px rgba(251,191,36,0.42);
+      }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* text content */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      padding: 40px 24px;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      padding: 6px 20px;
+      background: var(--white);
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--pop-pink);
+      margin-bottom: 20px;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.15);
+      animation: fade-up 0.7s ease-out 0.2s both;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 12vw, 7rem);
+      font-weight: 700;
+      color: var(--pop-pink);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 12px;
+      text-shadow: 0 0 30px rgba(255,255,255,0.95), 0 2px 4px rgba(0,0,0,0.1);
+      animation: fade-up 0.8s ease-out 0.4s both;
+    }
+
+    .hero h1 em { font-style: italic; }
+
+    .hero-date {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+      margin-bottom: 6px;
+      animation: fade-up 0.7s ease-out 0.65s both;
+    }
+
+    .hero-members {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+      animation: fade-up 0.7s ease-out 0.85s both;
+    }
+
+    /* bottom wave into content */
+    .hero-bottom {
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 100%; z-index: 20;
+    }
+
+    .hero-bottom svg { display: block; width: 100%; }
+
+    /* ===== STICKY NAV ===== */
+    .sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(250,246,241,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+    }
+
+    .sticky-nav-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .sticky-nav-inner::-webkit-scrollbar { display: none; }
+
+    .sticky-nav a {
+      flex-shrink: 0;
+      padding: 14px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .sticky-nav a:hover,
+    .sticky-nav a.active {
+      color: var(--ocean);
+      border-bottom-color: var(--ocean);
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ===== ACCORDION SECTIONS ===== */
+    .accordion {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .accordion-header:hover .accordion-title {
+      color: var(--ocean);
+    }
+
+    .accordion-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .accordion-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .accordion-icon.blue { background: var(--ocean-light); }
+    .accordion-icon.orange { background: var(--sunset-light); }
+    .accordion-icon.green { background: var(--palm-light); }
+
+    .accordion-title {
+      font-size: 1rem;
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+
+    .accordion-subtitle {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 1px;
+    }
+
+    .accordion-chevron {
+      width: 20px;
+      height: 20px;
+      color: var(--text-secondary);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+
+    .accordion.open .accordion-chevron {
+      transform: rotate(180deg);
+    }
+
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .accordion.open .accordion-body {
+      max-height: 6000px;
+    }
+
+    .accordion-body-inner {
+      padding-bottom: 24px;
+    }
+
+    /* ===== SECTION ===== */
+    .section {
+      padding: 60px 0 40px;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--ocean);
+      margin-bottom: 12px;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--ocean);
+      border-radius: 50%;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 32px;
+      letter-spacing: -0.5px;
+    }
+
+    /* ===== INFO GRID ===== */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .info-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+    }
+
+    .info-card.full { grid-column: 1 / -1; }
+
+    .info-card .info-icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .info-card .info-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px;
+    }
+    .info-card .info-value { font-size: 1rem; font-weight: 700; }
+    .info-card .info-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px; }
+
+    /* ===== FLIGHT CARD ===== */
+    .flight-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .flight-card::before {
+      content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--ocean);
+    }
+    .flight-direction {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--ocean); margin-bottom: 16px;
+    }
+    .flight-route { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+    .flight-city { text-align: center; flex: 1; }
+    .flight-city .code { font-size: 2rem; font-weight: 900; letter-spacing: -1px; line-height: 1; }
+    .flight-city .name { font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; }
+    .flight-line { flex: 1; display: flex; align-items: center; gap: 8px; }
+    .flight-line .line { flex: 1; height: 1px; background: var(--border); }
+    .flight-line .plane { font-size: 1rem; color: var(--ocean); }
+    .flight-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+    .flight-meta-item { font-size: 0.75rem; }
+    .flight-meta-item .label { color: var(--text-secondary); font-weight: 500; }
+    .flight-meta-item .value { font-weight: 700; }
+
+    /* ===== HOTEL CARD ===== */
+    .hotel-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px; margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .hotel-img {
+      width: calc(100% + 48px); height: 180px; object-fit: cover;
+      display: block; margin: -24px -24px 20px -24px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .hotel-name { font-size: 1.1rem; font-weight: 800; margin-bottom: 4px; }
+    .hotel-address { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px; }
+    .hotel-address a { color: var(--ocean); text-decoration: none; }
+    .hotel-address a:hover { text-decoration: underline; }
+    .hotel-details { display: flex; flex-wrap: wrap; gap: 16px; }
+    .hotel-detail { font-size: 0.8rem; }
+    .hotel-detail .label { color: var(--text-secondary); font-weight: 500; }
+    .hotel-detail .value { font-weight: 700; }
+
+    /* ===== RESTAURANT CARDS ===== */
+    .resto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 600px) { .resto-grid { grid-template-columns: 1fr; } }
+    .resto-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .resto-img { width: 100%; height: 140px; object-fit: cover; display: block; background: #e8e8e8; }
+    .resto-body { padding: 14px; }
+    .resto-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+    .resto-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .resto-name { font-size: 0.95rem; font-weight: 800; line-height: 1.3; }
+    .resto-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+    .resto-badge {
+      font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+      letter-spacing: 0.3px;
+    }
+    .resto-badge.cat { background: var(--ocean-light); color: var(--ocean); }
+    .resto-badge.area { background: var(--palm-light); color: #1a5c30; }
+    .resto-badge.price { background: var(--sunset-light); color: #b85c00; }
+    .resto-badge.special { background: #ffe4f0; color: #c0396e; }
+    .resto-desc { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+    .resto-map { display: inline-block; margin-top: 8px; font-size: 0.72rem; font-weight: 600; color: var(--ocean); text-decoration: none; }
+    .resto-map:hover { text-decoration: underline; }
+
+    /* ===== DAY TIMELINE ===== */
+    .day {
+      position: relative;
+      padding-left: 32px;
+      padding-bottom: 48px;
+    }
+    .day::before {
+      content: ""; position: absolute; left: 7px; top: 8px; bottom: 0;
+      width: 1px; background: var(--border);
+    }
+    .day:last-child::before { display: none; }
+    .day-dot {
+      position: absolute; left: 0; top: 6px; width: 15px; height: 15px;
+      border-radius: 50%; background: var(--white); border: 3px solid var(--ocean);
+    }
+    .day.highlight .day-dot {
+      background: var(--ocean); box-shadow: 0 0 0 4px rgba(0,119,182,0.15);
+    }
+    .day-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+    .day-date { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.5px; }
+    .day-weekday {
+      font-size: 0.75rem; font-weight: 600; color: var(--text-secondary);
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .day-cards { display: flex; flex-direction: column; gap: 8px; }
+    .day-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 18px 20px;
+      display: flex; align-items: flex-start; gap: 14px; transition: box-shadow 0.3s;
+    }
+    .day-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    .day-card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .day-card-icon.blue { background: var(--ocean-light); }
+    .day-card-icon.orange { background: var(--sunset-light); }
+    .day-card-icon.green { background: var(--palm-light); }
+    .day-card-icon.pink { background: #ffe4f0; }
+    .day-card-content { flex: 1; }
+    .day-card-time { font-size: 0.7rem; font-weight: 600; color: var(--ocean); letter-spacing: 0.5px; margin-bottom: 2px; }
+    .day-card-title { font-size: 0.95rem; font-weight: 700; }
+    .day-card-title a { color: inherit; text-decoration: none; }
+    .day-card-title a::after { content: " ↗"; font-size: 0.7em; opacity: 0.45; }
+    .day-card-title a:hover { color: var(--ocean); }
+    .day-card-desc { font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px; }
+    .resto-link { color: var(--ocean); text-decoration: underline; text-decoration-style: dotted; font-weight: 600; }
+    .resto-link:hover { text-decoration-style: solid; }
+
+    /* ===== CHECKLIST ===== */
+    .checklist-category {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--ocean);
+      margin: 20px 0 6px; padding-bottom: 4px;
+      border-bottom: 2px solid var(--ocean-light);
+    }
+    .checklist-category:first-child { margin-top: 0; }
+    .checklist { columns: 2; column-gap: 16px; list-style: none; }
+    .checklist li {
+      font-size: 0.85rem; padding: 8px 0; border-bottom: 1px solid var(--border);
+      break-inside: avoid; display: flex; align-items: center; gap: 10px;
+      cursor: pointer; user-select: none; transition: color 0.15s;
+    }
+    .checklist li::before {
+      content: ""; min-width: 18px; height: 18px;
+      border: 2px solid var(--border); border-radius: 4px; flex-shrink: 0;
+      transition: background 0.15s, border-color 0.15s;
+      background-position: center; background-repeat: no-repeat;
+    }
+    .checklist li.checked { color: var(--text-secondary); text-decoration: line-through; }
+    .checklist li.checked::before {
+      background-color: var(--ocean); border-color: var(--ocean);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='9' viewBox='0 0 11 9'%3E%3Cpath d='M1 4l3 3 6-6' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+    }
+
+    /* ===== ETICKET LINKS ===== */
+    .eticket-section { margin-top: 16px; }
+    .eticket-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text-secondary); margin-bottom: 10px;
+    }
+    .eticket-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .eticket-link {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--ocean-light); border: 1px solid #c5dfe8;
+      border-radius: var(--radius-sm); padding: 12px 14px;
+      text-decoration: none; color: var(--text); transition: box-shadow 0.2s;
+    }
+    .eticket-link:hover { box-shadow: 0 4px 16px rgba(0,119,182,0.12); }
+    .eticket-link .et-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .eticket-link .et-name { font-size: 0.85rem; font-weight: 700; }
+    .eticket-link .et-sub { font-size: 0.7rem; color: var(--text-secondary); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center; padding: 40px 20px 60px;
+      font-size: 0.75rem; color: var(--text-secondary);
+    }
+    .footer .aloha {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-style: italic; color: var(--ocean); margin-bottom: 8px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .info-grid { grid-template-columns: 1fr; }
+      .flight-route { gap: 8px; }
+      .flight-city .code { font-size: 1.5rem; }
+      .flight-meta { gap: 12px; }
+      .checklist { columns: 1; }
+      .hotel-details { flex-direction: column; gap: 8px; }
+.hero-palm { width: clamp(100px, 36vw, 160px); }
+    }
+
+    @media print {
+      .hero { min-height: auto; padding: 60px 0; break-after: page; }
+      .sticky-nav { display: none; }
+      .accordion-body { max-height: none !important; }
+      .accordion-chevron { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="top">
+
+    <!-- Sunset gradient background -->
+    <div class="hero-bg"></div>
+    <div class="hero-halftone"></div>
+
+    <!-- Sun -->
+    <div class="hero-sun"></div>
+
+    <!-- Sandy shore (fills gap below waves) -->
+    <div class="hero-shore"></div>
+
+    <!-- Ocean waves (3 layers, independent speeds) -->
+    <div class="hero-ocean hero-ocean-1">
+      <svg viewBox="0 0 375 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 55 C60 35 130 75 190 55 C250 35 310 70 375 55 L375 90 L0 90Z" fill="#4a6fa5" opacity="0.55"/>
+      </svg>
+    </div>
+    <div class="hero-ocean hero-ocean-2">
+      <svg viewBox="0 0 375 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 68 C55 48 120 82 188 65 C256 48 318 78 375 65 L375 90 L0 90Z" fill="#2d4e8a" opacity="0.75"/>
+      </svg>
+    </div>
+    <div class="hero-ocean hero-ocean-3">
+      <svg viewBox="0 0 375 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 78 C70 62 150 88 250 74 C310 64 350 80 375 75 L375 90 L0 90Z" fill="#263d7a"/>
+      </svg>
+    </div>
+
+    <!-- Left palm tree -->
+    <div class="hero-palm hero-palm-left">
+      <svg viewBox="0 0 160 440" xmlns="http://www.w3.org/2000/svg">
+        <path d="M80 440 C77 360 72 280 75 200 C74 140 76 90 82 50" fill="none" stroke="#1a3a1a" stroke-width="18" stroke-linecap="round"/>
+        <path d="M80 60 C55 38 22 45 12 65 C35 54 62 58 78 72" fill="#1b4020"/>
+        <path d="M80 60 C62 28 52 0 62 8 C68 20 76 42 78 65" fill="#1b4020"/>
+        <path d="M80 60 C96 22 118 6 122 18 C114 30 94 46 79 68" fill="#1b4020"/>
+        <path d="M80 60 C105 38 135 44 138 64 C115 54 90 58 80 72" fill="#1b4020"/>
+        <path d="M80 60 C65 55 40 68 32 84 C56 72 70 68 79 76" fill="#1b4020"/>
+        <circle cx="77" cy="75" r="7" fill="#254e25"/>
+        <circle cx="84" cy="79" r="6" fill="#254e25"/>
+      </svg>
+    </div>
+
+    <!-- Right palm tree (mirrored) -->
+    <div class="hero-palm hero-palm-right">
+      <svg viewBox="0 0 160 440" xmlns="http://www.w3.org/2000/svg">
+        <path d="M80 440 C77 360 72 280 75 200 C74 140 76 90 82 50" fill="none" stroke="#1a3a1a" stroke-width="18" stroke-linecap="round"/>
+        <path d="M80 60 C55 38 22 45 12 65 C35 54 62 58 78 72" fill="#1b4020"/>
+        <path d="M80 60 C62 28 52 0 62 8 C68 20 76 42 78 65" fill="#1b4020"/>
+        <path d="M80 60 C96 22 118 6 122 18 C114 30 94 46 79 68" fill="#1b4020"/>
+        <path d="M80 60 C105 38 135 44 138 64 C115 54 90 58 80 72" fill="#1b4020"/>
+        <path d="M80 60 C65 55 40 68 32 84 C56 72 70 68 79 76" fill="#1b4020"/>
+        <circle cx="77" cy="75" r="7" fill="#254e25"/>
+        <circle cx="84" cy="79" r="6" fill="#254e25"/>
+      </svg>
+    </div>
+
+    <!-- Text -->
+    <div class="hero-content">
+      <div class="hero-eyebrow">Komi Family Trip</div>
+      <h1><em>Hawaii</em><br>2026</h1>
+      <p class="hero-date">March 4 &ndash; 10, 2026</p>
+      <p class="hero-members">Kazuma &middot; Yuka &middot; Chisato &middot; Makoto &middot; Seiko &middot; Kazuki</p>
+    </div>
+
+    <!-- Bottom wave -->
+    <div class="hero-bottom">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="var(--sand)">
+        <path d="M0,30 C480,60 960,0 1440,30 L1440,60 L0,60Z"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===== STICKY NAV ===== -->
+  <nav class="sticky-nav">
+    <div class="sticky-nav-inner">
+      <a href="#top">Top</a>
+      <a href="#schedule" class="active">Schedule</a>
+      <a href="#info-section">Info</a>
+      <a href="#packing-section">Packing</a>
+    </div>
+  </nav>
+
+  <!-- ===== SCHEDULE (MAIN CONTENT) ===== -->
+  <section class="section" id="schedule">
+    <div class="container">
+      <div class="section-label">Itinerary</div>
+      <h2 class="section-title">スケジュール</h2>
+
+      <!-- Day 1 -->
+      <div class="day" data-date="2026-03-04">
+        <div class="day-dot"></div>
+        <div class="day-header">
+          <span class="day-date">3/4</span>
+          <span class="day-weekday">Wednesday</span>
+        </div>
+        <div class="day-cards">
+          <div class="day-card">
+            <div class="day-card-icon blue">&#9992;&#65039;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">21:00 JST</div>
+              <div class="day-card-title">羽田空港 出発</div>
+              <div class="day-card-desc">JL0074 / ターミナル3 / 19:00までにチェックイン</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon blue">&#127796;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">09:00 HST (同日)</div>
+              <div class="day-card-title">ホノルル到着</div>
+              <div class="day-card-desc">入国審査 &rarr; 荷物受取 &rarr; ホテルへ移動</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon orange">&#128663;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">10:00頃</div>
+              <div class="day-card-title">タクシーでホテルへ</div>
+              <div class="day-card-desc">DoubleTree by Hilton Alana へ移動、荷物を預ける（チェックインは16:00）</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon green">&#128717;&#65039;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">11:00 &ndash; 15:00</div>
+              <div class="day-card-title"><a href="https://www.google.com/maps/search/?api=1&query=Ala+Moana+Center+Honolulu" target="_blank">アラモアナセンター</a></div>
+              <div class="day-card-desc">ホテルからすぐ近く。到着日の買い物&amp;ランチを楽しもう</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon orange">&#127965;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">16:00</div>
+              <div class="day-card-title">DoubleTree チェックイン</div>
+              <div class="day-card-desc">荷物を受け取って部屋へ</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon green">&#127860;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">Evening</div>
+              <div class="day-card-title">ワイキキでディナー</div>
+              <div class="day-card-desc">初日の夜はゆっくり近場で食事を楽しもう</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 2 -->
+      <div class="day" data-date="2026-03-05">
+        <div class="day-dot"></div>
+        <div class="day-header">
+          <span class="day-date">3/5</span>
+          <span class="day-weekday">Thursday</span>
+        </div>
+        <div class="day-cards">
+          <div class="day-card">
+            <div class="day-card-icon orange">&#128663;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">10:00</div>
+              <div class="day-card-title">タクシーでカカアコへ</div>
+              <div class="day-card-desc">DoubleTreeからタクシーで約10分。ワードビレッジ周辺で降りるとアクセスしやすい</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon pink">&#127912;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">10:15 &ndash; 13:00</div>
+              <div class="day-card-title"><a href="https://www.google.com/maps/search/?api=1&query=Ward+Village+Kakaako+Honolulu" target="_blank">カカアコ＆ワード散策（ランチ込み）</a></div>
+              <div class="day-card-desc">ホノルルのおしゃれエリア。ストリートアートのカカアコを歩き、ワードビレッジでショッピング＆カフェを楽しもう。ランチはワードビレッジ周辺のカジュアルなお店で済ませて13:00に切り上げ</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon orange">&#128663;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">13:00</div>
+              <div class="day-card-title">タクシーでカラカウア通りへ</div>
+              <div class="day-card-desc">カカアコからワイキキ中心部まで約10分</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon green">&#127717;&#65039;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">13:15 &ndash; 15:00</div>
+              <div class="day-card-title"><a href="https://www.google.com/maps/search/?api=1&query=Kalakaua+Avenue+Waikiki+Honolulu" target="_blank">ワイキキ中心部散策</a></div>
+              <div class="day-card-desc">カラカウア通り沿いをぶらり。88 Tees・ロイヤルハワイアンセンター・インターナショナルマーケットプレイスなどショッピングを楽しもう</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon green">&#127774;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">15:00 &ndash; 17:00</div>
+              <div class="day-card-title">ワイキキビーチでのんびり</div>
+              <div class="day-card-desc">ショッピングの後はビーチへ。砂浜や波打ち際で子供たちと自由に過ごす時間</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon green">&#127860;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">17:00 &ndash; 18:15</div>
+              <div class="day-card-title">ワイキキでディナー</div>
+              <div class="day-card-desc">レストランリストのワイキキ周辺から当日の気分で選ぼう。<a href="#resto-dukes" class="resto-link">Duke's Waikiki</a>・<a href="#resto-maui-brewing" class="resto-link">Maui Brewing Co.</a>・<a href="#resto-hardrock" class="resto-link">Hard Rock Cafe</a>などクヒオビーチに近いお店が充実。フラショーの18:30に間に合うよう早めに入店を</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon orange">&#128131;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">18:30頃</div>
+              <div class="day-card-title"><a href="https://www.google.com/maps/search/?api=1&query=Kuhio+Beach+Park+Waikiki+Honolulu" target="_blank">クヒオビーチ フラショー</a></div>
+              <div class="day-card-desc">ワイキキビーチ沿いで開催される無料の野外フラダンスショー。木曜・土曜開催、日没後スタート</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 3 -->
+      <div class="day" data-date="2026-03-06">
+        <div class="day-dot"></div>
+        <div class="day-header">
+          <span class="day-date">3/6</span>
+          <span class="day-weekday">Friday</span>
+        </div>
+        <div class="day-cards">
+          <div class="day-card">
+            <div class="day-card-icon green">&#127966;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">9:00 &ndash; 11:30</div>
+              <div class="day-card-title"><a href="https://www.google.com/maps/search/?api=1&query=Ala+Moana+Beach+Park+Magic+Island+Honolulu" target="_blank">アラモアナビーチパーク＆マジックアイランド</a></div>
+              <div class="day-card-desc">DoubleTreeから徒歩数分のビーチパーク。マジックアイランドのラグーンは波がなく穏やか。子供が安心して水遊びできる地元民にも人気のスポット</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon green">&#127860;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">11:30 &ndash; 13:00</div>
+              <div class="day-card-title">ランチ</div>
+              <div class="day-card-desc">昼寝前にさっと済ませよう。<a href="#resto-rainbow" class="resto-link">Rainbow Drive-In</a>（ローカルプレートランチの名店、タクシーで約5分）か、<a href="#resto-musubi" class="resto-link">Musubi Cafe IYASUME</a>（テイクアウトも可）がおすすめ</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon orange">&#128564;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">13:00 &ndash; 15:30</div>
+              <div class="day-card-title">ホテルでゆっくり（昼寝タイム）</div>
+              <div class="day-card-desc">午前中たっぷり遊んだあとはお部屋でしっかり休憩。子供も大人もリフレッシュ</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon blue">&#127774;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">15:30 &ndash; 18:00</div>
+              <div class="day-card-title">ホテルプール or ワイキキビーチ</div>
+              <div class="day-card-desc">目が覚めたら夕方のビーチへ。涼しくなってきた時間帯にのんびり</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 4 -->
+      <div class="day" data-date="2026-03-07">
+        <div class="day-dot"></div>
+        <div class="day-header">
+          <span class="day-date">3/7</span>
+          <span class="day-weekday">Saturday</span>
+        </div>
+        <div class="day-cards">
+          <div class="day-card">
+            <div class="day-card-icon orange">&#127890;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">10:00</div>
+              <div class="day-card-title">DoubleTree チェックアウト</div>
+              <div class="day-card-desc">荷物をまとめて出発</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon blue">&#127961;&#65039;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">10:15</div>
+              <div class="day-card-title">Grand Waikikianへ移動・荷物を預ける</div>
+              <div class="day-card-desc">DoubleTreeからタクシーで約5分。フロントで荷物を預けてそのままリゾートを満喫（チェックインは16:00）</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon blue">&#127754;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">10:30 &ndash; 12:30</div>
+              <div class="day-card-title"><a href="https://www.google.com/maps/search/?api=1&query=Duke+Kahanamoku+Beach+Honolulu" target="_blank">デューク・カハナモクビーチ &amp; ラグーン</a></div>
+              <div class="day-card-desc">リゾート専用の穏やかなビーチ。人工ラグーンは波がなく小さな子供でも安心して泳げる。午前中にしっかり遊ぼう</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon green">&#127860;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">12:30 &ndash; 13:30</div>
+              <div class="day-card-title"><a href="https://www.google.com/maps/search/?api=1&query=Tropics+Bar+Grill+Hilton+Hawaiian+Village+Honolulu" target="_blank">ランチ @ Tropics Bar &amp; Grill</a></div>
+              <div class="day-card-desc">リゾート内にあるオープンエアのバー＆グリル。レストランリストにも入ってるあのお店がここ！</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon green">&#127717;&#65039;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">13:30 &ndash; 16:00</div>
+              <div class="day-card-title"><a href="https://www.google.com/maps/search/?api=1&query=Hilton+Hawaiian+Village+Waikiki+Beach+Resort" target="_blank">レインボーバザール散策</a></div>
+              <div class="day-card-desc">リゾート内のショッピングエリアをのんびりひと回り。ハワイアン雑貨やおみやげをチェックしながらチェックインまでの時間を過ごそう</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon blue">&#127961;&#65039;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">16:00</div>
+              <div class="day-card-title"><a href="https://www.google.com/maps/search/?api=1&query=Hilton+Grand+Vacations+Club+Grand+Waikikian+1811+Ala+Moana+Blvd+Honolulu" target="_blank">Grand Waikikian チェックイン</a></div>
+              <div class="day-card-desc">2ベッドルームのオーシャンビュースイートへ。荷物を解いてゆっくり</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon orange">&#127752;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">18:00〜</div>
+              <div class="day-card-title">ラグーンでサンセット &amp; ディナー</div>
+              <div class="day-card-desc">ラグーン越しに沈む夕日を眺めながらリゾートでディナー。ハワイアンビレッジの夜を満喫</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 5 -->
+      <div class="day" data-date="2026-03-08">
+        <div class="day-dot"></div>
+        <div class="day-header">
+          <span class="day-date">3/8</span>
+          <span class="day-weekday">Sunday</span>
+        </div>
+        <div class="day-cards">
+          <div class="day-card">
+            <div class="day-card-icon orange">&#128663;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">09:00</div>
+              <div class="day-card-title">タクシーでスワップミートへ</div>
+              <div class="day-card-desc">ホテルのコンシェルジュに前日までに手配を依頼しておくとスムーズ</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon green">&#127922;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">09:30 &ndash; 12:00</div>
+              <div class="day-card-title"><a href="https://www.google.com/maps/search/?api=1&query=Aloha+Stadium+Swap+Meet+Halawa+Hawaii" target="_blank">アロハスタジアム スワップミート</a></div>
+              <div class="day-card-desc">ハワイ最大級のフリーマーケット。ローカルグッズや掘り出し物を探そう。ランチは現地のフードコート（Ho'okipa Hale）やキッチンカーで。プレートランチ・タコス・シェイブアイスなど気軽に食べられる</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon orange">&#128663;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">12:00頃</div>
+              <div class="day-card-title">タクシーでホテルへ戻る</div>
+              <div class="day-card-desc">帰りのタクシーは電話で呼ぼう<br>Charley's Taxi: <strong>808-531-1333</strong><br>TheCab Hawaii: <strong>808-422-2222</strong><br>スワップミートからGrand Waikikianまで約25分</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon blue">&#127774;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">13:00 &ndash; 17:00</div>
+              <div class="day-card-title">午後は自由時間</div>
+              <div class="day-card-desc">ヒルトンのラグーンやプールでのんびり、ワイキキビーチで砂遊び、アラモアナでお土産探しなど。最後のハワイ時間を自由に満喫しよう</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon orange">&#127773;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">Evening</div>
+              <div class="day-card-title">最後の夜を満喫</div>
+              <div class="day-card-desc">ヒルトンのラグーンでサンセットを眺めながら、ハワイ最後のディナー</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 6 -->
+      <div class="day" data-date="2026-03-09">
+        <div class="day-dot"></div>
+        <div class="day-header">
+          <span class="day-date">3/9</span>
+          <span class="day-weekday">Monday</span>
+        </div>
+        <div class="day-cards">
+          <div class="day-card">
+            <div class="day-card-icon orange">&#127890;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">09:00</div>
+              <div class="day-card-title">Grand Waikikian チェックアウト</div>
+              <div class="day-card-desc">忘れ物チェック、早めにチェックアウトを済ませる</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon orange">&#128663;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">09:15</div>
+              <div class="day-card-title">タクシーで空港へ</div>
+              <div class="day-card-desc">前日にコンシェルジュに手配を依頼しておこう。ワイキキ &rarr; 空港は約30分</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon blue">&#127796;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">10:00</div>
+              <div class="day-card-title">ホノルル空港 到着</div>
+              <div class="day-card-desc">JL0073 / ターミナル2 / チェックイン・荷物預け・出国手続きを済ませる</div>
+            </div>
+          </div>
+          <div class="day-card">
+            <div class="day-card-icon blue">&#9992;&#65039;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">12:05</div>
+              <div class="day-card-title">ホノルル出発</div>
+              <div class="day-card-desc">JL0073 / 定刻出発。約9時間のフライト、ゆっくり休もう</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 7 -->
+      <div class="day" data-date="2026-03-10">
+        <div class="day-dot"></div>
+        <div class="day-header">
+          <span class="day-date">3/10</span>
+          <span class="day-weekday">Tuesday</span>
+        </div>
+        <div class="day-cards">
+          <div class="day-card">
+            <div class="day-card-icon blue">&#127969;</div>
+            <div class="day-card-content">
+              <div class="day-card-time">16:05 JST</div>
+              <div class="day-card-title">羽田空港 到着</div>
+              <div class="day-card-desc">おつかれさまでした！</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== INFO ACCORDIONS ===== -->
+  <section id="info-section">
+    <div class="container">
+
+      <!-- Overview -->
+      <div class="accordion" data-accordion>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-left">
+            <div class="accordion-icon blue">&#128209;</div>
+            <div>
+              <div class="accordion-title">旅のきほん</div>
+              <div class="accordion-subtitle">JAL / 5泊7日 / 4名 / 予約番号 EGV2VW</div>
+            </div>
+          </div>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div class="info-grid">
+              <div class="info-card">
+                <div class="info-icon">&#9992;&#65039;</div>
+                <div class="info-label">Airline</div>
+                <div class="info-value">Japan Airlines</div>
+                <div class="info-sub">JL0074 / JL0073</div>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">&#128197;</div>
+                <div class="info-label">Period</div>
+                <div class="info-value">5泊7日</div>
+                <div class="info-sub">3/4 (水) &ndash; 3/10 (火)</div>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">&#127961;&#65039;</div>
+                <div class="info-label">Destination</div>
+                <div class="info-value">Oahu, Hawaii</div>
+                <div class="info-sub">Waikiki Beach Area</div>
+              </div>
+              <div class="info-card">
+                <div class="info-icon">&#128101;</div>
+                <div class="info-label">Members</div>
+                <div class="info-value">4名</div>
+                <div class="info-sub">Kazuma, Yuka, Makoto, Chisato</div>
+              </div>
+              <div class="info-card full">
+                <div class="info-icon">&#128209;</div>
+                <div class="info-label">Booking Reference</div>
+                <div class="info-value">EGV2VW</div>
+                <div class="info-sub">JAL e-Ticket</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flights -->
+      <div class="accordion" data-accordion>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-left">
+            <div class="accordion-icon orange">&#9992;&#65039;</div>
+            <div>
+              <div class="accordion-title">フライト情報</div>
+              <div class="accordion-subtitle">HND 21:00 &rarr; HNL 09:00 / HNL 12:05 &rarr; HND 16:05</div>
+            </div>
+          </div>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div class="flight-card">
+              <div class="flight-direction">Outbound &mdash; 3月4日 (水)</div>
+              <div class="flight-route">
+                <div class="flight-city"><div class="code">HND</div><div class="name">羽田空港 T3</div></div>
+                <div class="flight-line"><div class="line"></div><div class="plane">&#9992;&#65039;</div><div class="line"></div></div>
+                <div class="flight-city"><div class="code">HNL</div><div class="name">ホノルル T2</div></div>
+              </div>
+              <div class="flight-meta">
+                <div class="flight-meta-item"><span class="label">便名 </span><span class="value">JL0074</span></div>
+                <div class="flight-meta-item"><span class="label">出発 </span><span class="value">21:00</span></div>
+                <div class="flight-meta-item"><span class="label">到着 </span><span class="value">09:00 (同日)</span></div>
+                <div class="flight-meta-item"><span class="label">飛行時間 </span><span class="value">約7時間</span></div>
+              </div>
+            </div>
+            <div class="flight-card">
+              <div class="flight-direction">Return &mdash; 3月9日 (月)</div>
+              <div class="flight-route">
+                <div class="flight-city"><div class="code">HNL</div><div class="name">ホノルル T2</div></div>
+                <div class="flight-line"><div class="line"></div><div class="plane">&#9992;&#65039;</div><div class="line"></div></div>
+                <div class="flight-city"><div class="code">HND</div><div class="name">羽田空港 T3</div></div>
+              </div>
+              <div class="flight-meta">
+                <div class="flight-meta-item"><span class="label">便名 </span><span class="value">JL0073</span></div>
+                <div class="flight-meta-item"><span class="label">出発 </span><span class="value">12:05</span></div>
+                <div class="flight-meta-item"><span class="label">到着 </span><span class="value">16:05 (翌3/10)</span></div>
+                <div class="flight-meta-item"><span class="label">飛行時間 </span><span class="value">約9時間</span></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Restaurants -->
+      <div class="accordion" data-accordion>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-left">
+            <div class="accordion-icon green">&#127869;&#65039;</div>
+            <div>
+              <div class="accordion-title">レストラン候補</div>
+              <div class="accordion-subtitle">ランチ・ディナーの参考リスト</div>
+            </div>
+          </div>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div class="resto-grid">
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="Monkeypod Kitchen" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127961;</div>
+                    <div class="resto-name">Monkeypod Kitchen by Merriman</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">ハワイアン</span>
+                    <span class="resto-badge area">ワイキキ</span>
+                    <span class="resto-badge price">$$$</span>
+                  </div>
+                  <div class="resto-desc">ハワイ産食材にこだわる地産地消レストラン。ライブミュージックとクラフトカクテルが人気。パッションフルーツのマイタイは必飲</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Monkeypod+Kitchen+by+Merriman+Waikiki+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80" alt="Tropic Bar & Grill" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127754;</div>
+                    <div class="resto-name">Tropic Bar &amp; Grill</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">アメリカン</span>
+                    <span class="resto-badge area">ワイキキ</span>
+                    <span class="resto-badge price">$$</span>
+                  </div>
+                  <div class="resto-desc">ワイキキビーチに面したオープンエアのバー＆グリル。海を眺めながらバーガーやシーフードをカジュアルに楽しめる</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Tropic+Bar+Grill+Waikiki+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=600&q=80" alt="Yogurt Story" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127828;</div>
+                    <div class="resto-name">Yogurt Story</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">ブランチ</span>
+                    <span class="resto-badge area">カパフル通り</span>
+                    <span class="resto-badge price">$$</span>
+                  </div>
+                  <div class="resto-desc">地元っ子に大人気の朝食・ブランチ店。カラフルなヨーグルトボウルが映えると評判。早めに行かないと行列必至</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Yogurt+Story+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card" id="resto-maui-brewing">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1566633806327-68e152aaf26d?auto=format&fit=crop&w=600&q=80" alt="Maui Brewing Co." loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127866;</div>
+                    <div class="resto-name">Maui Brewing Co.</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">クラフトビール</span>
+                    <span class="resto-badge area">ワイキキ</span>
+                    <span class="resto-badge price">$$</span>
+                  </div>
+                  <div class="resto-desc">ハワイ発のクラフトビールブランド直営店。個性派ビールのラインナップとバーガー・ナチョスでアメリカらしい食事を</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Maui+Brewing+Co+Waikiki+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Teddy's Bigger Burgers" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127828;</div>
+                    <div class="resto-name">Teddy&apos;s Bigger Burgers</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">バーガー</span>
+                    <span class="resto-badge area">ワイキキ</span>
+                    <span class="resto-badge price">$</span>
+                  </div>
+                  <div class="resto-desc">ハワイ生まれのバーガーチェーン。ジューシーなパティと豊富なトッピングが人気。観光の合間にサクッと食べられる</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Teddy%27s+Bigger+Burgers+Waikiki+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card" id="resto-dukes">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Duke's Waikiki" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127774;</div>
+                    <div class="resto-name">Duke&apos;s Waikiki</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">ハワイアン</span>
+                    <span class="resto-badge area">ワイキキビーチ</span>
+                    <span class="resto-badge price">$$$</span>
+                  </div>
+                  <div class="resto-desc">サーファーの英雄Duke Kahanamokuを称えた老舗ダイニング。ビーチに面したロケーションが最高。ランチからハッピーアワーまで</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Duke%27s+Waikiki+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card" id="resto-rainbow">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" alt="Rainbow Drive-In" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127752;</div>
+                    <div class="resto-name">Rainbow Drive-In</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">プレートランチ</span>
+                    <span class="resto-badge area">カパフル通り</span>
+                    <span class="resto-badge price">$</span>
+                  </div>
+                  <div class="resto-desc">1961年創業のハワイのソウルフード「プレートランチ」の名店。カルアポーク＋白飯＋マカロニサラダのコンボが定番</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Rainbow+Drive-In+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80" alt="Kona Brewing Co." loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127830;</div>
+                    <div class="resto-name">Kona Brewing Co.</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">アメリカン</span>
+                    <span class="resto-badge area">ワイキキ</span>
+                    <span class="resto-badge price">$$</span>
+                  </div>
+                  <div class="resto-desc">ハワイ発コナビールの直営ブルーパブ。ピザ・バーガー・BBQリブなどガッツリ系メニューが充実。子連れにも入りやすい雰囲気</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Kona+Brewing+Co+Waikiki+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card" id="resto-musubi">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=600&q=80" alt="Musubi Cafe IYASUME" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127873;</div>
+                    <div class="resto-name">Musubi Cafe IYASUME</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">ローカルフード</span>
+                    <span class="resto-badge area">ワイキキ</span>
+                    <span class="resto-badge price">$</span>
+                  </div>
+                  <div class="resto-desc">スパムむすびの名店。ハワイのソウルフード「むすび」を豊富なバリエーションで楽しめる。観光の合間にサクッと食べられて子供にも大人気</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Musubi+Cafe+IYASUME+Waikiki+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=600&q=80" alt="Sky Waikiki" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127751;</div>
+                    <div class="resto-name">Sky Waikiki</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">バー＆グリル</span>
+                    <span class="resto-badge area">ワイキキ</span>
+                    <span class="resto-badge price">$$</span>
+                  </div>
+                  <div class="resto-desc">ワイキキのワイキキビーチコマーホテル最上階にあるルーフトップバー。ダイヤモンドヘッドとワイキキを一望できる絶景スポット。ハッピーアワーもあり夕暮れ時が特におすすめ</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Sky+Waikiki+Rooftop+Bar+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card" id="resto-hardrock">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="Hard Rock Cafe" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127928;</div>
+                    <div class="resto-name">Hard Rock Cafe Honolulu</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">アメリカン</span>
+                    <span class="resto-badge area">ワイキキ</span>
+                    <span class="resto-badge price">$$</span>
+                  </div>
+                  <div class="resto-desc">世界的ロックブランドのホノルル店。定番のバーガーやリブをロック音楽とともに楽しめる。限定グッズも豊富で子供も大人も盛り上がれるにぎやかな雰囲気</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Hard+Rock+Cafe+Honolulu+Waikiki" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shopping -->
+      <div class="accordion" data-accordion>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-left">
+            <div class="accordion-icon pink">&#127717;&#65039;</div>
+            <div>
+              <div class="accordion-title">ショッピング候補</div>
+              <div class="accordion-subtitle">おみやげ・ファッション・ガジェット</div>
+            </div>
+          </div>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div class="resto-grid">
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=600&q=80" alt="Ray-Ban" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#128374;</div>
+                    <div class="resto-name">Ray-Ban</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">ガジェット</span>
+                    <span class="resto-badge area">アラモアナ</span>
+                    <span class="resto-badge special">Kazuma &#10084;</span>
+                  </div>
+                  <div class="resto-desc">Meta × Ray-BanのAIスマートグラスが試着・購入できる。通話・音楽・写真撮影まで対応のウェアラブル端末。アラモアナセンター内に店舗あり</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Ray-Ban+Ala+Moana+Center+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=600&q=80" alt="88 Tees" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#128083;</div>
+                    <div class="resto-name">88 Tees</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">ファッション</span>
+                    <span class="resto-badge area">ワイキキ</span>
+                  </div>
+                  <div class="resto-desc">ハワイ発のユニークなTシャツブランド。地元カルチャーやユーモアを落とし込んだデザインが豊富で、ここでしか買えない一枚が見つかる</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=88+Tees+Waikiki+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=600&q=80" alt="Honolulu Cookie Company" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127850;</div>
+                    <div class="resto-name">Honolulu Cookie Company</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">みやげ</span>
+                    <span class="resto-badge area">ワイキキ/アラモアナ</span>
+                    <span class="resto-badge price">$</span>
+                  </div>
+                  <div class="resto-desc">ハワイ土産の定番。パイナップル形のマカダミアナッツクッキーが大人気。缶入りギフトボックスは日本へのお土産に最適。ワイキキ・アラモアナに複数店舗あり</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Honolulu+Cookie+Company+Waikiki" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1467043153537-a4fba2cd39ef?auto=format&fit=crop&w=600&q=80" alt="Bailey's Antiques" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#128084;</div>
+                    <div class="resto-name">Bailey&apos;s Antiques &amp; Aloha Shirts</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">ヴィンテージ</span>
+                    <span class="resto-badge area">カパフル通り</span>
+                    <span class="resto-badge price">$$</span>
+                  </div>
+                  <div class="resto-desc">世界最大級のヴィンテージアロハシャツコレクション。1940〜60年代のレアものから手頃な一枚まで。本物のハワイを身にまとおう</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Bailey%27s+Antiques+Aloha+Shirts+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&q=80" alt="Lego Store" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#129521;</div>
+                    <div class="resto-name">Lego Store</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">おもちゃ</span>
+                    <span class="resto-badge area">アラモアナ</span>
+                    <span class="resto-badge special">子供向け &#9733;</span>
+                  </div>
+                  <div class="resto-desc">アラモアナセンター内のレゴ専門店。ハワイ限定セットもあり子供が大喜び。自分でパーツを選べるビルドステーションも楽しい</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Lego+Store+Ala+Moana+Center+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=600&q=80" alt="Maui Divers Jewelry" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#128142;</div>
+                    <div class="resto-name">Maui Divers Jewelry</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">ジュエリー</span>
+                    <span class="resto-badge area">ワイキキ/アラモアナ</span>
+                    <span class="resto-badge special">妻向け &#10084;</span>
+                  </div>
+                  <div class="resto-desc">ハワイ発の老舗ジュエリーブランド。コーラルやブラックパールを使ったハワイアンジュエリーが揃う。旅の記念や贈り物にも◎</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Maui+Divers+Jewelry+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=600&q=80" alt="Anthropologie" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#128717;&#65039;</div>
+                    <div class="resto-name">Anthropologie</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">アメリカン雑貨</span>
+                    <span class="resto-badge area">アラモアナ</span>
+                    <span class="resto-badge special">妻向け &#10084;</span>
+                  </div>
+                  <div class="resto-desc">アメリカを代表するライフスタイルショップ。ボヘミアンテイストのファッション・雑貨・インテリアが充実。日本未上陸ブランドのアイテムはプレゼントにも喜ばれる</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Anthropologie+Ala+Moana+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80" alt="Hilo Hattie" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127810;</div>
+                    <div class="resto-name">Hilo Hattie</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">ハワイみやげ</span>
+                    <span class="resto-badge area">アラモアナ近く</span>
+                    <span class="resto-badge price">$</span>
+                  </div>
+                  <div class="resto-desc">ハワイ最大のアロハウェア＆みやげ専門店。アロハシャツ・ムームー・ハワイアン雑貨まで何でも揃う。家族全員分のおみやげをここで一気に調達できる</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Hilo+Hattie+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=600&q=80" alt="Royal Hawaiian Center" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127965;&#65039;</div>
+                    <div class="resto-name">Royal Hawaiian Center</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">ショッピングモール</span>
+                    <span class="resto-badge area">ワイキキ</span>
+                  </div>
+                  <div class="resto-desc">ワイキキのメインストリート・カラカウア通り沿いに位置する大型ショッピングセンター。ブランドショップ・レストラン・ルアウショーも開催。ピンクパレスの愛称で知られるロイヤルハワイアンホテルに隣接</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Royal+Hawaiian+Center+Waikiki+Honolulu" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+              <div class="resto-card">
+                <img class="resto-img" src="https://images.unsplash.com/photo-1567449303078-57ad995bd17f?auto=format&fit=crop&w=600&q=80" alt="Ward Village" loading="lazy" onerror="this.style.display='none'">
+                <div class="resto-body">
+                  <div class="resto-header">
+                    <div class="resto-icon">&#127963;&#65039;</div>
+                    <div class="resto-name">Ward Village</div>
+                  </div>
+                  <div class="resto-badges">
+                    <span class="resto-badge cat">ショッピング＆ダイニング</span>
+                    <span class="resto-badge area">カカアコ</span>
+                  </div>
+                  <div class="resto-desc">カカアコエリアの複合商業施設。おしゃれなレストランやカフェ、セレクトショップが集まるローカル人気スポット。ホールフーズも入っており地元の食材や調達にも便利</div>
+                  <a class="resto-map" href="https://www.google.com/maps/search/?api=1&query=Ward+Village+Honolulu+Hawaii" target="_blank">&#128205; Google マップで見る</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hotels -->
+      <div class="accordion" data-accordion>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-left">
+            <div class="accordion-icon green">&#127961;&#65039;</div>
+            <div>
+              <div class="accordion-title">宿泊先</div>
+              <div class="accordion-subtitle">DoubleTree Alana (3泊) &rarr; Grand Waikikian (2泊)</div>
+            </div>
+          </div>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <div class="hotel-card">
+              <img class="hotel-img" src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=800&q=80" alt="DoubleTree by Hilton Alana" loading="lazy" onerror="this.style.display='none'">
+              <div class="hotel-name">DoubleTree by Hilton Alana &ndash; Waikiki Beach</div>
+              <div class="hotel-address"><a href="https://www.google.com/maps/search/?api=1&query=DoubleTree+by+Hilton+Alana+-+Waikiki+Beach%2C+1956+Ala+Moana+Boulevard+Honolulu%2C+HI+US" target="_blank">1956 Ala Moana Blvd, Honolulu, HI 96815 &#x2197;</a></div>
+              <div class="hotel-details">
+                <div class="hotel-detail"><span class="label">宿泊 </span><span class="value">3/4 &ndash; 3/7 (3泊)</span></div>
+                <div class="hotel-detail"><span class="label">確認番号 </span><span class="value">543183805</span></div>
+                <div class="hotel-detail"><span class="label">IN/OUT </span><span class="value">16:00 / 10:00</span></div>
+              </div>
+            </div>
+            <div class="hotel-card">
+              <img class="hotel-img" src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=800&q=80" alt="Grand Waikikian" loading="lazy" onerror="this.style.display='none'">
+              <div class="hotel-name">Hilton Grand Vacations Club Grand Waikikian</div>
+              <div class="hotel-address"><a href="https://www.google.com/maps/search/?api=1&query=Hilton+Grand+Vacations+Club+Grand+Waikikian+Honolulu%2C+1811+Ala+Moana+Blvd.+Honolulu%2C+HI+US" target="_blank">1811 Ala Moana Blvd, Honolulu, HI &#x2197;</a></div>
+              <div class="hotel-details">
+                <div class="hotel-detail"><span class="label">宿泊 </span><span class="value">3/7 &ndash; 3/9 (2泊)</span></div>
+                <div class="hotel-detail"><span class="label">確認番号 </span><span class="value">3321102204</span></div>
+                <div class="hotel-detail"><span class="label">IN/OUT </span><span class="value">16:00 / 10:00</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== PACKING ===== -->
+  <section class="section" id="packing-section">
+    <div class="container">
+      <div class="accordion open" data-accordion>
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-left">
+            <div class="accordion-icon orange">&#127890;</div>
+            <div>
+              <div class="accordion-title">持ち物チェックリスト</div>
+              <div class="accordion-subtitle">パスポート、ESTA、水着、日焼け止め...</div>
+            </div>
+          </div>
+          <svg class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p class="checklist-category">&#128196; 書類・お金</p>
+            <ul class="checklist">
+              <li>パスポート</li>
+              <li>ESTA (電子渡航認証)</li>
+              <li>eチケット控え</li>
+              <li>海外旅行保険証</li>
+              <li>ホテル予約確認書</li>
+              <li>クレジットカード</li>
+              <li>現金（ドル）</li>
+            </ul>
+
+            <p class="checklist-category">&#127958; ビーチ・プール</p>
+            <ul class="checklist">
+              <li>水着</li>
+              <li>ラッシュガード</li>
+              <li>ビーチサンダル</li>
+              <li>ゴーグル</li>
+              <li>砂遊びセット</li>
+              <li>日焼け止め</li>
+            </ul>
+
+            <p class="checklist-category">&#128083; ファッション</p>
+            <ul class="checklist">
+              <li>帽子</li>
+              <li>サングラス</li>
+<li>羽織もの（薄手）</li>
+            </ul>
+
+            <p class="checklist-category">&#128118; 子供向け</p>
+            <ul class="checklist">
+              <li>機内用おもちゃ・絵本</li>
+              <li>子供用酔い止め</li>
+              <li>ベビーカー</li>
+              <li>抱っこ紐</li>
+            </ul>
+
+            <p class="checklist-category">&#127959; 便利グッズ</p>
+            <ul class="checklist">
+              <li>エコバッグ</li>
+              <li>折り畳み傘</li>
+              <li>充電器・モバイルバッテリー</li>
+              <li>アイマスク</li>
+            </ul>
+
+            <p class="checklist-category">&#128138; 薬・衛生</p>
+            <ul class="checklist">
+              <li>常備薬</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="aloha">Aloha!</div>
+    <p>KOMI Family Hawaii Trip 2026 &mdash; Have a wonderful journey.</p>
+  </footer>
+
+  <script>
+    function toggleAccordion(header) {
+      const accordion = header.closest('.accordion');
+      accordion.classList.toggle('open');
+    }
+
+    // Sticky nav active state
+    const navLinks = document.querySelectorAll('.sticky-nav a');
+    const sections = document.querySelectorAll('[id]');
+
+    function updateNav() {
+      const scrollY = window.scrollY + 80;
+      sections.forEach(section => {
+        const top = section.offsetTop;
+        const height = section.offsetHeight;
+        const id = section.id;
+        if (scrollY >= top && scrollY < top + height) {
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + id) {
+              link.classList.add('active');
+            }
+          });
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateNav, { passive: true });
+
+    // Open accordion and scroll to target when clicking resto-links
+    document.querySelectorAll('.resto-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (!target) return;
+        const accordion = target.closest('.accordion');
+        if (accordion && !accordion.classList.contains('open')) {
+          accordion.classList.add('open');
+        }
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          target.style.outline = '2px solid var(--ocean)';
+          target.style.borderRadius = 'var(--radius)';
+          setTimeout(() => target.style.outline = '', 1500);
+        }, 50);
+      });
+    });
+
+    // Highlight today's day (Hawaii Standard Time = UTC-10)
+    const nowHST = new Date(Date.now() - 10 * 60 * 60 * 1000);
+    const todayStr = nowHST.toISOString().slice(0, 10);
+    document.querySelectorAll('.day[data-date]').forEach(day => {
+      if (day.dataset.date === todayStr) day.classList.add('highlight');
+    });
+
+    // Checklist with localStorage persistence
+    document.querySelectorAll('.checklist li').forEach(li => {
+      const key = 'chk_' + li.textContent.trim();
+      if (localStorage.getItem(key)) li.classList.add('checked');
+      li.addEventListener('click', () => {
+        li.classList.toggle('checked');
+        li.classList.contains('checked')
+          ? localStorage.setItem(key, '1')
+          : localStorage.removeItem(key);
+      });
+    });
+  </script>
+
+</body>
+</html>
